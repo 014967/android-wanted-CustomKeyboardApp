@@ -2,6 +2,7 @@ package com.preonboarding.customkeyboard.presentation.ui.info
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,13 +15,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +36,7 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.flowlayout.SizeMode
@@ -46,6 +52,7 @@ import com.preonboarding.customkeyboard.presentation.ui.info.data.KeyWordData
 import com.preonboarding.customkeyboard.presentation.ui.info.data.ReviewData
 import com.preonboarding.customkeyboard.presentation.ui.info.data.TagsData
 import com.preonboarding.customkeyboard.presentation.ui.info.data.ThemeData
+import timber.log.Timber
 
 /**
  * @Created by 김현국 2022/10/12
@@ -58,6 +65,8 @@ fun InfoRoute() {
 
 @Composable
 fun InfoScreen() {
+    var click by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -129,12 +138,23 @@ fun InfoScreen() {
                     isCreator = index == 0
                 )
             }
+            item {
+                Spacer(modifier = Modifier.height(64.dp))
+            }
+        }
+        if (click) {
+            Timber.d("in")
+            ClickDialog()
         }
         InfoBottomBar(
             modifier = Modifier.background(
                 color = CustomKeyBoardTheme.color
                     .white
-            ).align(Alignment.BottomCenter)
+            ).align(Alignment.BottomCenter),
+            onClick = {
+                Timber.d("in2")
+                click = !click
+            }
         )
     }
 }
@@ -326,7 +346,8 @@ fun InfoReview(
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun InfoBottomBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth().height(64.dp).shadow(1.dp).padding(horizontal = 12.dp),
@@ -374,7 +395,9 @@ fun InfoBottomBar(
             modifier = Modifier.height(40.dp).width(144.dp).background(
                 color = CustomKeyBoardTheme.color.allMainColor,
                 shape = RoundedCornerShape(24.dp)
-            )
+            ).clickable {
+                onClick()
+            }
         ) {
             Text(
                 modifier = Modifier.align(Alignment.Center),
@@ -386,6 +409,23 @@ fun InfoBottomBar(
                         )
                     ),
                 color = CustomKeyBoardTheme.color.white
+            )
+        }
+    }
+}
+
+@Composable
+fun ClickDialog() {
+    Dialog(
+        onDismissRequest = {}
+    ) {
+        Surface(
+            modifier = Modifier.width(200.dp).wrapContentHeight(),
+            shape = RoundedCornerShape(12.dp),
+            color = CustomKeyBoardTheme.color.white
+        ) {
+            Text(
+                text = "hi"
             )
         }
     }
@@ -419,6 +459,6 @@ fun PreviewInfoTag() {
 @Composable
 fun PreviewBottomBar() {
     CustomKeyBoardTheme {
-        InfoBottomBar()
+//        InfoBottomBar()
     }
 }
