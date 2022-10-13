@@ -10,6 +10,7 @@ sealed class NavigationRoute(val route: String) {
     }
     object KeyBoardTestScreenGraph : NavigationRoute("keyboard_test_screen") {
         object KeyBoardTestScreen : NavigationRoute("keyboard_test_screen.screen")
+        object ClipBoardTestScreen : NavigationRoute("keyboard_test_screen.clip_board")
     }
 }
 
