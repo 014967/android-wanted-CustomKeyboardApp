@@ -249,14 +249,13 @@ class KeyboardKorean constructor(
                         actionButton.setOnClickListener(myOnClickListener)
                     }
                     "Fav" -> {
-                        actionButton.text = myText[item]
-                        buttons.add(actionButton)
-                        myOnClickListener = object : View.OnClickListener {
-                            override fun onClick(p0: View?) {
-                                keyboardInterationListener.modechange(2)
-                            }
-                        }
-                        actionButton.setOnClickListener(myOnClickListener)
+                        spacialKey.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                        spacialKey.visibility = View.VISIBLE
+                        actionButton.visibility = View.GONE
+                        myOnClickListener = getFavoriteData()
+                        spacialKey.setOnClickListener(myOnClickListener)
+                        spacialKey.setOnTouchListener(getOnTouchListener(myOnClickListener))
+                        spacialKey.setBackgroundResource(R.drawable.key_background)
                     }
                     "space" -> {
                         spacialKey.setImageResource(R.drawable.ic_space_bar)
@@ -307,6 +306,12 @@ class KeyboardKorean constructor(
 
     fun getSpaceAction(): View.OnClickListener {
         return View.OnClickListener {
+        }
+    }
+
+    fun getFavoriteData(): View.OnClickListener {
+        return View.OnClickListener {
+            // 자주 사용하는 키워드 가져오는 기능
         }
     }
 
