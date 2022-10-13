@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 
 /**
@@ -22,6 +23,7 @@ fun MultiStyleText(style: TextStyle, text1: String, color1: Color, text2: String
             withStyle(style = SpanStyle(color = color2)) {
                 append(text2)
             }
-        }
+        },
+        textAlign = TextAlign.Center
     )
 }
