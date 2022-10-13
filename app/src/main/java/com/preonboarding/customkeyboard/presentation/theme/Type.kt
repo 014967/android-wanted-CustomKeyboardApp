@@ -2,8 +2,6 @@ package com.preonboarding.customkeyboard.presentation.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -64,6 +62,12 @@ val customKeyBoardTypography = CustomKeyBoardTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 10.sp,
         lineHeight = 14.sp
+    ),
+    subTitle3 = TextStyle(
+        fontFamily = notosansCjKr,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        lineHeight = 24.sp
     )
 )
 
@@ -75,7 +79,8 @@ data class CustomKeyBoardTypography(
     val allBody: TextStyle,
     val subTitle: TextStyle,
     val subBody: TextStyle,
-    val thirdSubBody: TextStyle
+    val thirdSubBody: TextStyle,
+    val subTitle3: TextStyle
 )
 val LocalCustomKeyBoardTypography = staticCompositionLocalOf {
     CustomKeyBoardTypography(
@@ -85,6 +90,7 @@ val LocalCustomKeyBoardTypography = staticCompositionLocalOf {
         allBody = customKeyBoardTypography.allBody,
         subTitle = customKeyBoardTypography.subTitle,
         subBody = customKeyBoardTypography.subBody,
-        thirdSubBody = customKeyBoardTypography.thirdSubBody
+        thirdSubBody = customKeyBoardTypography.thirdSubBody,
+        subTitle3 = customKeyBoardTypography.subTitle3
     )
 }
