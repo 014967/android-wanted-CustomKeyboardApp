@@ -59,12 +59,18 @@ import timber.log.Timber
  */
 
 @Composable
-fun InfoRoute() {
-    InfoScreen()
+fun InfoRoute(
+    navigateTestScreen: () -> Unit
+) {
+    InfoScreen(
+        navigateTestScreen = navigateTestScreen
+    )
 }
 
 @Composable
-fun InfoScreen() {
+fun InfoScreen(
+    navigateTestScreen: () -> Unit
+) {
     var click by remember { mutableStateOf(false) }
 
     Box(
@@ -143,8 +149,10 @@ fun InfoScreen() {
             }
         }
         if (click) {
-            Timber.d("in")
-            ClickDialog()
+            ClickDialog(
+                changeVisible = { click = !click },
+                navigateTestScreen = navigateTestScreen
+            )
         }
         InfoBottomBar(
             modifier = Modifier.background(
@@ -402,7 +410,7 @@ fun InfoBottomBar(
             Text(
                 modifier = Modifier.align(Alignment.Center),
                 text = "구매하기",
-                style = CustomKeyBoardTheme.typography.thirdSubBody
+                style = CustomKeyBoardTheme.typography.subTitle3
                     .copy(
                         platformStyle = PlatformTextStyle(
                             includeFontPadding = false
@@ -414,19 +422,113 @@ fun InfoBottomBar(
     }
 }
 
+@OptIn(ExperimentalTextApi::class)
 @Composable
-fun ClickDialog() {
+fun ClickDialog(
+    changeVisible: () -> Unit,
+    navigateTestScreen: () -> Unit
+) {
     Dialog(
-        onDismissRequest = {}
+        onDismissRequest = {
+            changeVisible()
+        }
     ) {
         Surface(
-            modifier = Modifier.width(200.dp).wrapContentHeight(),
-            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier.padding(horizontal = 40.dp).fillMaxWidth().wrapContentHeight(),
+            shape = RoundedCornerShape(24.dp),
             color = CustomKeyBoardTheme.color.white
         ) {
-            Text(
-                text = "hi"
-            )
+            Column(
+                modifier = Modifier.padding(horizontal = 40.dp).fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    modifier = Modifier.size(100.dp),
+                    painter = painterResource(id = R.drawable.img_keyword_1),
+                    contentDescription = null
+                )
+                MultiStyleText(
+                    style = CustomKeyBoardTheme.typography.subTitle,
+                    text1 = "N젬",
+                    color1 = CustomKeyBoardTheme.color.themeInfoGem,
+                    text2 = "이 부족해요\n빠르게 충전해 보세요!",
+                    color2 = CustomKeyBoardTheme.color.allTitleGray
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "젬 수량",
+                        style = CustomKeyBoardTheme.typography.subTitle3
+                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_back_arrow),
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.width(24.dp))
+                        Image(
+                            modifier = Modifier.size(11.dp),
+                            painter = painterResource(id = R.drawable.ic_zam),
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.width(6.33.dp))
+                        Text(
+                            text = "5",
+                            color = CustomKeyBoardTheme.color.themeInfoGem,
+                            style = CustomKeyBoardTheme.typography.subTitle.copy(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(24.dp))
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_forward_arrow),
+                            contentDescription = null
+                        )
+                    }
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "결제 금액",
+                        style = CustomKeyBoardTheme.typography.subTitle3
+                    )
+                    Text(
+                        text = "₩ 1,100",
+                        style = CustomKeyBoardTheme.typography.allBodyMid,
+                        color = CustomKeyBoardTheme.color.allMainColor
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(42.dp)
+                        .background(color = CustomKeyBoardTheme.color.allMainColor, shape = RoundedCornerShape(24.dp))
+                        .clickable { navigateTestScreen() }
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = "충전하고 바로 사용하기",
+                        style = CustomKeyBoardTheme.typography.subTitle3
+                            .copy(
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                )
+                            ),
+                        color = CustomKeyBoardTheme.color.white
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }

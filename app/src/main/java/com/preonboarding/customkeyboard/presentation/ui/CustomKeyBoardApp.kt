@@ -26,7 +26,7 @@ fun CustomKeyBoardApp() {
         Box {
             NavHost(
                 modifier = Modifier.padding(paddingValues = paddingValues),
-                navController = rememberNavController(),
+                navController = customKeyBoardAppState.navController,
                 startDestination = NavigationRoute.InfoScreenGraph.route
             ) {
                 infoGraph(
